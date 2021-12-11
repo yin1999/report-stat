@@ -1,0 +1,12 @@
+{
+	"to": [
+		"receiver@example.com"
+	],
+	"SMTP": {
+		"username": "user@example.com",
+		"password": "password",
+		"TLS": true,
+		"host": "smtp.exmple.com",
+		"port": 465
+	}
+}

@@ -1,0 +1,25 @@
+{
+	"username": "teacher's username",
+	"password": "teacher's password",
+	"wid": "copy from url parameter",
+	"key": "2018",
+	"class": [
+		"物联网18_1",
+		"物联网18_2",
+		"物联网18_3",
+		"电科18_1",
+		"电科18_2",
+		"自动化18_1",
+		"自动化18_2",
+		"自动化18_3",
+		"计算机18_1",
+		"计算机18_2",
+		"计算机18_3",
+		"通信18_1",
+		"通信18_2",
+		"通信18_3",
+		"全部"
+	],
+	"file": "/path/to/root/page/data.json",
+	"out": "/path/to/root/page/image/"
+}
