@@ -10,6 +10,9 @@ import (
 	"github.com/google/go-querystring/query"
 )
 
+// ErrCouldNotGetFormSessionID get form session id failed
+var ErrCouldNotGetFormSession = errors.New("could not get form session")
+
 type htmlSymbol uint8
 
 const (
@@ -40,8 +43,8 @@ func (c *punchClient) getFormSessionID() (err error) {
 	}
 	drainBody(res.Body)
 
-	if c.jar.getCookieByDomain(reportDomain) == nil {
-		err = CookieNotFoundErr{"JSESSIONID"}
+	if err == nil && c.httpClient.Jar.Cookies(&url.URL{Host: reportDomain}) == nil {
+		err = ErrCouldNotGetFormSession
 	}
 	return
 }

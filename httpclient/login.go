@@ -14,6 +14,9 @@ import (
 	"github.com/google/go-querystring/query"
 )
 
+// ErrCouldNotLogin login failed
+var ErrCouldNotLogin = errors.New("could not login")
+
 type loginForm struct {
 	Username   string `url:"username"`
 	Password   string `url:"password"`
@@ -27,7 +30,7 @@ type loginForm struct {
 
 // login 登录系统
 func (c *punchClient) login(account *Account) (err error) {
-	const loginURL = "http://authserver.hhu.edu.cn/authserver/login"
+	const loginURL = "https://authserver.hhu.edu.cn/authserver/login"
 	var req *http.Request
 	req, err = getWithContext(c.ctx, loginURL)
 	if err != nil {
@@ -87,15 +90,15 @@ func (c *punchClient) login(account *Account) (err error) {
 		return
 	}
 
-	c.httpClient.CheckRedirect = getResponseN(1)
+	c.httpClient.CheckRedirect = notRedirect
 	if res, err = c.httpClient.Do(req); err != nil {
 		return
 	}
 	c.httpClient.CheckRedirect = nil
 	drainBody(res.Body)
 
-	if c.jar.getCookieByName("iPlanetDirectoryPro") == nil {
-		err = CookieNotFoundErr{"iPlanetDirectoryPro"}
+	if res.StatusCode != http.StatusFound { // redirect after login success
+		err = ErrCouldNotLogin
 	}
 	return
 }
@@ -114,7 +117,7 @@ func (c *punchClient) logout() error {
 	if err != nil {
 		return err
 	}
-	c.httpClient.CheckRedirect = getResponseN(1)
+	c.httpClient.CheckRedirect = notRedirect
 	_, err = c.httpClient.Do(req)
 	return err
 }

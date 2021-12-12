@@ -58,13 +58,8 @@ func trimLeadingSpace(data []byte) []byte {
 	return data[start:]
 }
 
-func getResponseN(n int) func(req *http.Request, via []*http.Request) error {
-	return func(req *http.Request, via []*http.Request) error {
-		if len(via) == n {
-			return http.ErrUseLastResponse
-		}
-		return nil
-	}
+func notRedirect(req *http.Request, via []*http.Request) error {
+	return http.ErrUseLastResponse
 }
 
 func encryptAES(data, key string) (string, error) {
