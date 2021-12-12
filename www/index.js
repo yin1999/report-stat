@@ -17,7 +17,7 @@ if (value) {
 	select.value = value
 }
 
-const img = document.querySelector('#img')
+const img = document.querySelector('img')
 
 if (navigator.userAgent.includes('QQ/') || navigator.userAgent.includes('MicroMessenger')) { //Mobile QQ or Wechat
 	let status = null
@@ -88,11 +88,11 @@ function setNumber(remain) {
 }
 
 function showMetaData(lastModified) {
-	const lm = document.querySelector('#lastModified')
+	const lm = document.querySelector('time')
 	const date = new Date(lastModified * 1000)
 	lm.dateTime = date.toISOString()
 	lm.innerText = date.toLocaleString('zh-CN', { dateStyle: 'short', timeStyle: 'medium', hourCycle: 'h24' })
-	document.querySelector('#metadata').hidden = false
+	document.querySelector('aside').hidden = false
 }
 
 function getCookie(key) {
