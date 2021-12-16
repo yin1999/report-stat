@@ -69,7 +69,7 @@ function filter(data, classname) {
 	}
 	let start = 0
 	for (start in data) {
-		if (data[start][4] == classname) {
+		if (data[start][2] == classname) {
 			break
 		}
 	}
@@ -77,7 +77,7 @@ function filter(data, classname) {
 		return []
 	}
 	let end = data.length - 1
-	while (data[end][4] !== classname) {
+	while (data[end][2] !== classname) {
 		end--
 	}
 	return data.slice(start, end + 1)
@@ -176,7 +176,7 @@ function renderTable(tableData, all) { // todo add classname
 		const h = (i + 2) * height - 6
 		draw(ctx, width1, h, tableData[i][0])
 		draw(ctx, width2, h, tableData[i][1])
-		all && draw(ctx, width3, h, tableData[i][4])
+		all && draw(ctx, width3, h, tableData[i][2])
 	}
 
 	canvas.toBlob(blob => {

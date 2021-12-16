@@ -41,23 +41,22 @@ func (rd *reportDetail) clear() {
 }
 
 func (rd reportDetail) MarshalJSON() ([]byte, error) {
-	return sliceToJson(rd[3:]), nil
-}
+	return sliceToJson(rd[3], rd[4], rd[7]), nil
 
-func sliceToJson(slice []string) []byte {
+func sliceToJson(slice ...string) []byte {
 	n := len(slice)*3 + 1
 	for i := range slice {
 		n += len(slice[i])
 	}
 	buf := bytes.Buffer{}
 	buf.Grow(n)
-	buf.WriteString("[\"")
+	buf.WriteString(`["`)
 	buf.WriteString(slice[0])
 	for _, s := range slice[1:] {
-		buf.WriteString("\",\"")
+		buf.WriteString(`","`)
 		buf.WriteString(s)
 	}
-	buf.WriteString("\"]")
+	buf.WriteString(`"]`)
 	return buf.Bytes()
 }
 
