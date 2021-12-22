@@ -68,16 +68,11 @@ function filter(data, classname) {
 		return data
 	}
 	let start = 0
-	for (start in data) {
-		if (data[start][2] == classname) {
-			break
-		}
-	}
-	if (start === data.length) {
-		return []
+	while (start !== data.length && data[start][2] < classname) {
+		start++
 	}
 	let end = data.length - 1
-	while (data[end][2] !== classname) {
+	while (end >= start && data[end][2] > classname) {
 		end--
 	}
 	return data.slice(start, end + 1)

@@ -42,6 +42,7 @@ func (rd *reportDetail) clear() {
 
 func (rd reportDetail) MarshalJSON() ([]byte, error) {
 	return sliceToJson(rd[3], rd[4], rd[7]), nil
+}
 
 func sliceToJson(slice ...string) []byte {
 	n := len(slice)*3 + 1
