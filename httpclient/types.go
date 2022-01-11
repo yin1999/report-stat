@@ -33,7 +33,6 @@ func (da detailArray) clear() {
 	}
 }
 
-// clear remove the leading character 'C' for changzhou
 func (rd *reportDetail) clear() {
 	if rd[7][0] == 'C' {
 		rd[7] = rd[7][1:]
@@ -41,7 +40,7 @@ func (rd *reportDetail) clear() {
 }
 
 func (rd reportDetail) MarshalJSON() ([]byte, error) {
-	return sliceToJson(rd[3], rd[4], rd[7]), nil
+	return sliceToJson(rd[3], rd[4], rd[7]), nil // export id, name, class
 }
 
 func sliceToJson(slice ...string) []byte {
@@ -165,6 +164,7 @@ type punchClient struct {
 type Account struct {
 	Username string   `json:"username"`
 	Password string   `json:"password"`
+	Domain   string   `json:"domain"`
 	Class    []string `json:"class"`
 	Wid      string   `json:"wid"`
 	Key      string   `json:"key"`

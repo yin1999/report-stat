@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"flag"
+	"fmt"
 	"log"
 	"os"
 	"os/signal"
@@ -120,8 +121,8 @@ func task(ctx context.Context, account *client.Account, send bool) (err error) {
 	logger.Print("Start get form routine\n")
 
 	var timer *time.Timer
-	for count := uint(1); count <= maxAttempts; count++ {
-		logger.Print("Start get form\n")
+	for count := uint(1); true; count++ {
+		logger.Print("Start getting form\n")
 		var empty bool
 		c, cc := context.WithTimeout(ctx, 50*time.Second)
 		empty, err = client.GetFormData(c, account)
@@ -130,7 +131,7 @@ func task(ctx context.Context, account *client.Account, send bool) (err error) {
 		case nil:
 			logger.Print("get form finished\n")
 			if !empty && send && emailCfg != nil {
-				err = emailCfg.Send("form bot", "未填报名单提醒", `未填报名单查看链接: <a href="https://hhuiot.xyz/report-stat/">https://hhuiot.xyz/report-stat/</a>`)
+				err = emailCfg.Send("form bot", "未填报名单提醒", fmt.Sprintf("未填报名单查看: <a href=\"https://%s/report-stat/\">链接</a>", account.Domain))
 				if err != nil {
 					logger.Printf("send email err: %s\n", err.Error())
 				} else {
@@ -140,9 +141,11 @@ func task(ctx context.Context, account *client.Account, send bool) (err error) {
 			return
 		case context.Canceled:
 			return
-		default:
-			logger.Printf("Tried %d times. Retry after %v, err: %s\n", count, 5*time.Minute, err.Error())
 		}
+		if count >= maxAttempts {
+			break
+		}
+		logger.Printf("Tried %d times. Retry after %v, err: %s\n", count, 5*time.Minute, err.Error())
 
 		if timer == nil {
 			timer = time.NewTimer(5 * time.Minute)
@@ -156,12 +159,11 @@ func task(ctx context.Context, account *client.Account, send bool) (err error) {
 			return ctx.Err()
 		}
 	}
-	err = emailCfg.Send("form bot", "获取表单失败提示", "获取表单失败 err: "+err.Error())
-	if err != nil {
+
+	if err := emailCfg.Send("form bot", "获取表单失败提示", "获取表单失败 err: "+err.Error()); err != nil {
 		logger.Printf("Send message failed, err: %s\n", err.Error())
 	}
-	logger.Printf("Maximum attempts: %d reached. Last error: %s\n", maxAttempts, err.Error())
-	return ErrMaximumAttemptsExceeded
+	return fmt.Errorf("maximum attempts: %d reached with error: %w", maxAttempts, err)
 }
 
 func loadJson(v interface{}, name string) error {
