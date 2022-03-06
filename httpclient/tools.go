@@ -6,9 +6,9 @@ import (
 	"context"
 	"crypto/aes"
 	"crypto/cipher"
+	"crypto/rand"
 	"encoding/base64"
 	"io"
-	"math/rand"
 	"net/http"
 	"net/textproto"
 	"net/url"
@@ -19,7 +19,7 @@ var generalHeaders = http.Header{
 	"Accept":          []string{"*/*"},
 	"Accept-Language": []string{"zh-CN,zh;q=0.9"},
 	"Connection":      []string{"keep-alive"},
-	"User-Agent":      []string{"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.0.0 Safari/537.36"},
+	"User-Agent":      []string{"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.0.0 Safari/537.36"},
 }
 
 func postFormWithContext(ctx context.Context, url string, data url.Values) (*http.Request, error) {
@@ -81,8 +81,9 @@ func encryptAES(data, key string) (string, error) {
 // randBytes generate random bytes
 func randBytes(data []byte) {
 	const fill = "ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678"
+	rand.Read(data)
 	for i := range data {
-		data[i] = fill[rand.Int31()%int32(len(fill))]
+		data[i] = fill[data[i]%byte(len(fill))]
 	}
 }
 

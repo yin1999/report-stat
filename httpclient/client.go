@@ -67,9 +67,12 @@ func SetSslVerify(verify bool) {
 func newClient(ctx context.Context) *punchClient {
 	jar := newCookieJar()
 	return &punchClient{
-		ctx:        ctx,
-		jar:        jar,
-		httpClient: &http.Client{Jar: jar},
+		ctx: ctx,
+		jar: jar,
+		httpClient: &http.Client{
+			Jar:     jar,
+			Timeout: 10 * time.Second,
+		},
 	}
 }
 
