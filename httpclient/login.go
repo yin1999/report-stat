@@ -113,7 +113,7 @@ func (c *punchClient) logout() error {
 	case context.Canceled:
 		return context.Canceled
 	}
-	req, err := getWithContext(ctx, "http://authserver.hhu.edu.cn/authserver/logout")
+	req, err := getWithContext(ctx, "https://authserver.hhu.edu.cn/authserver/logout")
 	if err != nil {
 		return err
 	}

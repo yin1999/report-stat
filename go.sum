@@ -11,8 +11,8 @@ github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZN
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/testify v1.7.0 h1:nwc3DEeHmmLAfoZucVR881uASk0Mfjw8xYJ99tb5CcY=
 github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
-github.com/yin1999/healthreport v1.1.6 h1:e6nJvWE+eCPqgpnjtC5Qi2A0AjWkXVyBlEq1R3RMjzA=
-github.com/yin1999/healthreport v1.1.6/go.mod h1:QBX/b/LmKlkJoaNiYNdczSedBK+6tmtHmczTmMwUu2Y=
+github.com/yin1999/healthreport v1.1.7 h1:LuEnxE+bVi/u7+g3gqDXU8jydPie41UMZ4uilM6sX6Y=
+github.com/yin1999/healthreport v1.1.7/go.mod h1:QBX/b/LmKlkJoaNiYNdczSedBK+6tmtHmczTmMwUu2Y=
 golang.org/x/image v0.0.0-20210628002857-a66eb6448b8d/go.mod h1:023OzeP/+EPmXeapQh35lcL3II3LrY8Ic+EFFKVhULM=
 golang.org/x/image v0.0.0-20220302094943-723b81ca9867 h1:TcHcE0vrmgzNH1v3ppjcMGbhG5+9fMuvOmUYwNEF4q4=
 golang.org/x/image v0.0.0-20220302094943-723b81ca9867/go.mod h1:023OzeP/+EPmXeapQh35lcL3II3LrY8Ic+EFFKVhULM=
