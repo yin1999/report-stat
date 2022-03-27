@@ -60,14 +60,12 @@ func encryptAES(data, key string) (string, error) {
 	padLen := aes.BlockSize - len(data)%aes.BlockSize
 	cipherText := make([]byte, 64+len(data)+padLen)
 	randBytes(cipherText[:64])
-	copy(cipherText[64:], []byte(data))
+	copy(cipherText[64:], data)
 	if padLen > 0 { // pkcs7padding
 		fillBytes(cipherText[64+len(data):], byte(padLen))
 	}
 	iv := make([]byte, aes.BlockSize)
 	randBytes(iv)
-
-	copy(cipherText[64:], data)
 
 	mode := cipher.NewCBCEncrypter(block, iv)
 
